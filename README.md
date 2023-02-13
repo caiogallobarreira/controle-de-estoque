@@ -12,6 +12,12 @@ Este projeto consiste num sistema de controle de estoque, produzido para a maté
  - [ ] Navegação das páginas
  - [ ] Banco de Dados
  - [ ] Acesso a API
+ - [ ] Gerenciamento do Estoque
+	 - [ ] Criar produto
+		 - [ ] Salvar imagem do produto ao cadastrar
+		 - [ ] Salvar informações do produto no banco de dados
+	 - [ ] Editar produto
+	 - [ ] Excluir produto
  - [ ] Sistema de busca de produtos
  - [ ] Autenticação
 	 - [ ] Sistema de Login

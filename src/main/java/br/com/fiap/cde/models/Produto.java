@@ -3,20 +3,19 @@ package br.com.fiap.cde.models;
 public class Produto {
 
   private Long id;
-  private String produto;
+  private String nome;
   private String descricao;
+  private String imagemUrl;
   private Integer quantidade;
+  private Integer quantidadeMin;
 
-  public Produto(
-    Long id,
-    String produto,
-    String descricao,
-    Integer quantidade
-  ) {
+  public Produto(Long id, String nome, String descricao, String imagemUrl, Integer quantidade, Integer quantidadeMin) {
     this.id = id;
-    this.produto = produto;
+    this.nome = nome;
     this.descricao = descricao;
+    this.imagemUrl = imagemUrl;
     this.quantidade = quantidade;
+    this.quantidadeMin = quantidadeMin;
   }
 
   public Long getId() {
@@ -27,12 +26,12 @@ public class Produto {
     this.id = id;
   }
 
-  public String getProduto() {
-    return produto;
+  public String getNome() {
+    return nome;
   }
 
-  public void setProduto(String produto) {
-    this.produto = produto;
+  public void setNome(String nome) {
+    this.nome = nome;
   }
 
   public String getDescricao() {
@@ -43,6 +42,14 @@ public class Produto {
     this.descricao = descricao;
   }
 
+  public String getImagemUrl() {
+    return imagemUrl;
+  }
+
+  public void setImagemUrl(String imagemUrl) {
+    this.imagemUrl = imagemUrl;
+  }
+
   public Integer getQuantidade() {
     return quantidade;
   }
@@ -51,18 +58,17 @@ public class Produto {
     this.quantidade = quantidade;
   }
 
+  public Integer getQuantidadeMin() {
+    return quantidadeMin;
+  }
+
+  public void setQuantidadeMin(Integer quantidadeMin) {
+    this.quantidadeMin = quantidadeMin;
+  }
+
   @Override
   public String toString() {
-    return (
-      "Produto [id=" +
-      id +
-      ", produto=" +
-      produto +
-      ", descricao=" +
-      descricao +
-      ", quantidade=" +
-      quantidade +
-      "]"
-    );
+    return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", imagemUrl=" + imagemUrl
+        + ", quantidade=" + quantidade + ", quantidadeMin=" + quantidadeMin + "]";
   }
 }

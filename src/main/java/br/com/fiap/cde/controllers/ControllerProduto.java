@@ -10,7 +10,8 @@ public class ControllerProduto {
     
     @GetMapping("/api/produto")
     public Produto index(){
-        return new Produto(1l, "Faca", "Facas de cozinha com Lâminas em Aço Inox e Cabos de Polipropileno Preto", 100);
+        return new Produto(1l, "Faca", "Facas de cozinha com Lâminas em Aço Inox e Cabos de Polipropileno Preto", "https://www.example.com", 100, 5);
     }
+
 }
 

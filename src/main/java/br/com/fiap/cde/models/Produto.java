@@ -3,14 +3,17 @@ package br.com.fiap.cde.models;
 public class Produto {
 
   private Long id;
+  private Long estoqueId;
   private String nome;
   private String descricao;
   private String imagemUrl;
   private Integer quantidade;
   private Integer quantidadeMin;
 
-  public Produto(Long id, String nome, String descricao, String imagemUrl, Integer quantidade, Integer quantidadeMin) {
+  public Produto(Long id, Long estoqueId, String nome, String descricao, String imagemUrl, Integer quantidade,
+      Integer quantidadeMin) {
     this.id = id;
+    this.estoqueId = estoqueId;
     this.nome = nome;
     this.descricao = descricao;
     this.imagemUrl = imagemUrl;
@@ -24,6 +27,14 @@ public class Produto {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getEstoqueId() {
+    return estoqueId;
+  }
+
+  public void setEstoqueId(Long estoqueId) {
+    this.estoqueId = estoqueId;
   }
 
   public String getNome() {

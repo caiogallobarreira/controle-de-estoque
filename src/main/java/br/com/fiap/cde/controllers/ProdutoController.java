@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.cde.models.Produto;
 
 @RestController
-public class ControllerProduto {
+public class ProdutoController {
     
     @GetMapping("/api/produto")
     public Produto index(){

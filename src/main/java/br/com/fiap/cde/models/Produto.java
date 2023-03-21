@@ -8,17 +8,17 @@ public class Produto {
   private String descricao;
   private String imagemUrl;
   private Integer quantidade;
-  private Integer quantidadeMin;
+  private Integer quantidadeMinima;
 
   public Produto(Long id, Long estoqueId, String nome, String descricao, String imagemUrl, Integer quantidade,
-      Integer quantidadeMin) {
+      Integer quantidadeMinima) {
     this.id = id;
     this.estoqueId = estoqueId;
     this.nome = nome;
     this.descricao = descricao;
     this.imagemUrl = imagemUrl;
     this.quantidade = quantidade;
-    this.quantidadeMin = quantidadeMin;
+    this.quantidadeMinima = quantidadeMinima;
   }
 
   public Long getId() {
@@ -69,17 +69,17 @@ public class Produto {
     this.quantidade = quantidade;
   }
 
-  public Integer getQuantidadeMin() {
-    return quantidadeMin;
+  public Integer getQuantidadeMinima() {
+    return quantidadeMinima;
   }
 
-  public void setQuantidadeMin(Integer quantidadeMin) {
-    this.quantidadeMin = quantidadeMin;
+  public void setQuantidadeMinima(Integer quantidadeMinima) {
+    this.quantidadeMinima = quantidadeMinima;
   }
 
   @Override
   public String toString() {
     return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", imagemUrl=" + imagemUrl
-        + ", quantidade=" + quantidade + ", quantidadeMin=" + quantidadeMin + "]";
+        + ", quantidade=" + quantidade + ", quantidadeMinima=" + quantidadeMinima + "]";
   }
 }

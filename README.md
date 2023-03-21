@@ -154,21 +154,21 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 [
     {
         id: 1,
-        estoque_id: 1,
+        estoqueId: 1,
         nome: "Faca de Cozinha",
         descricao: "Facas de cozinha com Lâminas em Aço Inox e Cabos de Polipropileno Preto",
-        imagem_url: "https://controledeproduto.com.br/img/produtos/facadecozinha.png",
+        imagemUrl: "https://controledeproduto.com.br/img/produtos/facadecozinha.png",
         quantidade: 100,
-        quantidade_minima: 10,
+        quantidadeMinima: 10,
     },
     {
         id: 2,
-        estoque_id: 1,
+        estoqueId: 1,
         nome: "Televisão",
         descricao: "Televisão 4K de 55 polegadas",
-        imagem_url: "https://controledeproduto.com.br/img/produtos/televisao.png",
+        imagemUrl: "https://controledeproduto.com.br/img/produtos/televisao.png",
         quantidade: 50,
-        quantidade_minima: 5,
+        quantidadeMinima: 5,
     },
 ]
 ```
@@ -189,12 +189,12 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 
 ```js
 {
-    estoque_id: 1,
+    estoqueId: 1,
     nome: "Faca de Cozinha",
     descricao: "Facas de cozinha com Lâminas em Aço Inox e Cabos de Polipropileno Preto",
-    imagem_url: "https://controledeproduto.com.br/img/produtos/facadecozinha.png",
+    imagemUrl: "https://controledeproduto.com.br/img/produtos/facadecozinha.png",
     quantidade: 100,
-    quantidade_minima: 10,
+    quantidadeMinima: 10,
 }
 ```
 
@@ -211,7 +211,7 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 
 `GET` /api/produto/estoque-minimo
 
-Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produtos que possuem o parâmetro ``quantidade`` igual ao parâmetro ``quantidade_minima``
+Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produtos que possuem o parâmetro ``quantidade`` igual ao parâmetro ``quantidadeMinima``
 
 **Exemplo de corpo da resposta**
 
@@ -219,12 +219,12 @@ Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produ
 [
     {
         id: 1,
-        estoque_id: 1,
+        estoqueId: 1,
         nome: "Faca de Cozinha",
         descricao: "Facas de cozinha com Lâminas em Aço Inox e Cabos de Polipropileno Preto",
-        imagem_url: "https://controledeproduto.com.br/img/produtos/facadecozinha.png",
+        imagemUrl: "https://controledeproduto.com.br/img/produtos/facadecozinha.png",
         quantidade: 10,
-        quantidade_minima: 10,
+        quantidadeMinima: 10,
     }
 ]
 ```
@@ -245,23 +245,23 @@ Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produ
 
 | Campo            | Tipo   | Obrigatório?| Descrição
 |------------------|--------|:-----------:|-
-|estoque_id        |int     |sim          |O id do estoque que o produto pertence.
+|estoqueId        |int     |sim          |O id do estoque que o produto pertence.
 |nome              |String  |sim          |Texto com o nome do produto com no máximo 255 caracteres.
 |descricao         |String  |sim          |Texto com a descrição do produto com no máximo 255 caracteres.
 |quantidade        |int     |sim          |O valor da quantidade existente no produto.
-|quantidade_minima |int     |não          |O valor mínimo para alertar quantidade baixa no produto.
-|imagem_url        |String  |não          |Texto com a URL da imagem do produto.
+|quantidadeMinima |int     |não          |O valor mínimo para alertar quantidade baixa no produto.
+|imagemUrl        |String  |não          |Texto com a URL da imagem do produto.
 
 **Exemplo de corpo de requisição**
 
 ```js
 {
-    estoque_id: 1,
+    estoqueId: 1,
     nome: "Faca de Cozinha",
     descricao: "Facas de cozinha com Lâminas em Aço Inox e Cabos de Polipropileno Preto",
-    imagem_url: "https://controledeproduto.com.br/img/produtos/facadecozinha.png".
+    imagemUrl: "https://controledeproduto.com.br/img/produtos/facadecozinha.png".
     quantidade: 100,
-    quantidade_minima: 10,
+    quantidadeMinima: 10,
 }
 ```
 
@@ -282,23 +282,23 @@ Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produ
 
 | Campo            | Tipo   | Obrigatório?| Descrição
 |------------------|--------|:-----------:|-
-|estoque_id        |int     |não          |O id do estoque que o produto pertence.
+|estoqueId        |int     |não          |O id do estoque que o produto pertence.
 |nome              |String  |não          |Texto com o nome do produto com no máximo 255 caracteres.
 |descricao         |String  |não          |Texto com a descrição do produto com no máximo 255 caracteres.
 |quantidade        |int     |não          |O valor da quantidade existente no produto.
-|quantidade_minima |int     |não          |O valor mínimo para alertar quantidade baixa no produto.
-|imagem_url        |String  |não          |Texto com a URL da imagem do produto.
+|quantidadeMinima |int     |não          |O valor mínimo para alertar quantidade baixa no produto.
+|imagemUrl        |String  |não          |Texto com a URL da imagem do produto.
 
 **Exemplo de corpo de requisição**
 
 ```js
 {
-    estoque_id: 1,
+    estoqueId: 1,
     nome: "Faca de Cozinha",
     descricao: "Facas de cozinha com Lâminas em Aço Inox e Cabos de Polipropileno Preto",
-    imagem_url: "https://controledeproduto.com.br/img/produtos/facadecozinha.png",
+    imagemUrl: "https://controledeproduto.com.br/img/produtos/facadecozinha.png",
     quantidade: 100,
-    quantidade_minima: 10,
+    quantidadeMinima: 10,
 }
 ```
 

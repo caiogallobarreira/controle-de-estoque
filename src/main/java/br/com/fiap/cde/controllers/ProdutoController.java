@@ -26,12 +26,14 @@ public class ProdutoController {
     // ! Apenas para testes !
     List<Produto> produtos = new ArrayList<Produto>();
 
+    // Get ALL
     @GetMapping("/api/v1/produto")
     public List<Produto> index(){
         logger.info("Listando produtos: " + produtos);
         return produtos;
     }
     
+    // Get by Id
     @GetMapping("/api/v1/produto/{id}")
     public ResponseEntity<Produto> show(@PathVariable Long id){
         logger.info("Listando produto: " + id);
@@ -42,6 +44,7 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoOptional.get());
     }
 
+    // Post
     @PostMapping("/api/v1/produto")
     public ResponseEntity<Produto> create(@RequestBody Produto produto){
         logger.info("Produto criado com sucesso! " + produto);
@@ -49,6 +52,7 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(produto);
     }
 
+    // Delete
     @DeleteMapping("/api/v1/produto/{id}")
     public ResponseEntity<Produto> delete(@PathVariable Long id){
         logger.info("Produto deletado com sucesso! " + id);
@@ -60,6 +64,7 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    // Put
     @PutMapping("/api/v1/produto/{id}")
     public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto produto){
         logger.info("Produto atualizado com sucesso! " + produto);
@@ -67,14 +72,10 @@ public class ProdutoController {
         if (produtoOptional.isEmpty()) 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        Produto produtoAtualizado = produtoOptional.get();
-        produtoAtualizado.setNome(produto.getNome());
-        produtoAtualizado.setDescricao(produto.getDescricao());
-        produtoAtualizado.setImagemUrl(produto.getImagemUrl());
-        produtoAtualizado.setQuantidade(produto.getQuantidade());
-        produtoAtualizado.setQuantidadeMinima(produto.getQuantidadeMinima());
-        
-        return ResponseEntity.ok(produtoAtualizado);
+        produto.setId(id);
+        produtos.remove(produtoOptional.get());
+        produtos.add(produto);
+        return ResponseEntity.ok(produto);
     }
 
 }

@@ -1,14 +1,26 @@
 package br.com.fiap.cde.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Produto {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private Long estoqueId;
   private String nome;
   private String descricao;
   private String imagemUrl;
   private Integer quantidade;
   private Integer quantidadeMinima;
+
+  protected Produto() {
+  }
 
   public Produto(Long id, Long estoqueId, String nome, String descricao, String imagemUrl, Integer quantidade,
       Integer quantidadeMinima) {

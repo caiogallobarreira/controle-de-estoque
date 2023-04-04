@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.cde.exceptions.RestNotFoundException;
 import br.com.fiap.cde.models.Usuario;
 import br.com.fiap.cde.repository.UsuarioRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
@@ -40,16 +43,13 @@ public class UsuarioController {
     @GetMapping("{id}")
     public ResponseEntity<Usuario> show(@PathVariable Long id){
         logger.info("Listando usuario: " + id);
-        Optional<Usuario> usuarioOptional = repository.findById(id);
-        if (usuarioOptional.isEmpty()) 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-        return ResponseEntity.ok(usuarioOptional.get());
+        var usuarioOptional = getUsuario(id);
+        return ResponseEntity.ok(usuarioOptional);
     }
 
     // Post
     @PostMapping
-    public ResponseEntity<Usuario> create(@RequestBody Usuario usuario){
+    public ResponseEntity<Usuario> create(@RequestBody @Valid Usuario usuario, BindingResult result){
         logger.info("Usuario criado com sucesso! " + usuario);
         repository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
@@ -59,24 +59,22 @@ public class UsuarioController {
     @DeleteMapping("{id}")
     public ResponseEntity<Usuario> delete(@PathVariable Long id){
         logger.info("Usuario deletado com sucesso! " + id);
-        Optional<Usuario> usuarioOptional = repository.findById(id);
-        if (usuarioOptional.isEmpty()) 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-        repository.deleteById(id);
+        var usuarioOptional = getUsuario(id);
+        repository.delete(usuarioOptional);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     // Put
     @PutMapping("{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario){
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody @Valid Usuario usuario, BindingResult result){
         logger.info("Usuario atualizado com sucesso! " + id);
-        Optional<Usuario> usuarioOptional = repository.findById(id);
-        if (usuarioOptional.isEmpty()) 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
+        getUsuario(id);
         usuario.setId(id);
         repository.save(usuario);
         return ResponseEntity.status(HttpStatus.OK).body(usuario);
+    }
+
+    private Usuario getUsuario(Long id) {
+        return repository.findById(id).orElseThrow(() -> new RestNotFoundException("Usuário não encontrado!"));
     }
 }

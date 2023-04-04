@@ -4,19 +4,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Produto {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotNull 
   private Long estoqueId;
+  
+  @NotNull @Size(min = 3, max = 50, message = "O nome deve ter entre 3 e 50 caracteres")
   private String nome;
+  
+  @NotNull @Size(min = 3, max = 255, message = "A descrição deve ter entre 3 e 255 caracteres")
   private String descricao;
+  
+  @NotNull @Size(min = 3, max = 255, message = "A imagem deve ter entre 3 e 255 caracteres")
   private String imagemUrl;
+  
+  @NotNull  
   private Integer quantidade;
+
+  @NotNull
   private Integer quantidadeMinima;
 
   protected Produto() {

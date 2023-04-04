@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.cde.exceptions.RestNotFoundException;
 import br.com.fiap.cde.models.Estoque;
 import br.com.fiap.cde.repository.EstoqueRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/estoque")
@@ -39,17 +42,14 @@ public class EstoqueController {
     // Get by Id
     @GetMapping("{id}")
     public ResponseEntity<Estoque> show(@PathVariable Long id){
+        var estoqueOptional = getEstoque(id);
         logger.info("Listando estoque: " + id);
-        Optional<Estoque> estoqueOptional = repository.findById(id);
-        if (estoqueOptional.isEmpty()) 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        
-        return ResponseEntity.ok(estoqueOptional.get());
+        return ResponseEntity.ok(estoqueOptional);
     }
 
     // Post
     @PostMapping
-    public ResponseEntity<Estoque> create(@RequestBody Estoque estoque){
+    public ResponseEntity<Estoque> create(@RequestBody @Valid Estoque estoque, BindingResult result){
         logger.info("Estoque criado com sucesso! " + estoque);
         repository.save(estoque);
         return ResponseEntity.status(HttpStatus.CREATED).body(estoque);
@@ -58,25 +58,23 @@ public class EstoqueController {
     // Delete
     @DeleteMapping("{id}")
     public ResponseEntity<Estoque> delete(@PathVariable Long id){
+        var estoqueOptional = getEstoque(id);
         logger.info("Estoque deletado com sucesso! " + id);
-        Optional<Estoque> estoqueOptional = repository.findById(id);
-        if (estoqueOptional.isEmpty()) 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        
-        repository.delete(estoqueOptional.get());
+        repository.delete(estoqueOptional);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     // Put
     @PutMapping("{id}")
-    public ResponseEntity<Estoque> update(@PathVariable Long id, @RequestBody Estoque estoque){
+    public ResponseEntity<Estoque> update(@PathVariable Long id, @RequestBody @Valid Estoque estoque, BindingResult result){
+        getEstoque(id);
         logger.info("Estoque atualizado com sucesso! " + estoque);
-        Optional<Estoque> estoqueOptional = repository.findById(id);
-        if (estoqueOptional.isEmpty()) 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        
         estoque.setId(id);
         repository.save(estoque);
         return ResponseEntity.ok(estoque);
+    }
+
+    private Estoque getEstoque(Long id) {
+        return repository.findById(id).orElseThrow(() -> new RestNotFoundException("Estoque não encontrado!"));
     }
 }

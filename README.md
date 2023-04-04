@@ -3,26 +3,26 @@
 Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de maneira eficiente
 
 ## Endpoints
-- Estoque `/api/estoque`
+- Estoque `/api/v1/estoque`
     - [Cadastrar estoque](#cadastrar-estoque)
     - [Listar todos](#listar-todos)
     - [Detalhar estoque](#detalhar-estoque)
     - [Apagar estoque](#apagar-estoque)
     - [Atualizar estoque](#atualizar-estoque)
-- Produto `/api/produto`
+- Produto `/api/v1/produto`
     - [Cadastrar produto](#cadastrar-produto)
     - [Listar todas](#listar-todas)
     - [Detalhar produto](#detalhar-produto)
     - [Estoque mínimo](#estoque-mínimo)
     - [Apagar produto](#apagar-produto)
     - [Atualizar produto](#atualizar-produto)
-- Usuário `/api/usuario`
+- Usuário `/api/v1/usuario`
 
 ## :package: Estoque
 
 ### Listar todos
 
-`GET` /api/estoque
+`GET` /api/v1/estoque
 
 **Exemplo de corpo da resposta**
 
@@ -51,7 +51,7 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 
 ### Detalhar estoque
 
-`GET` /api/estoque/{id}
+`GET` /api/v1/estoque/{id}
 
 **Exemplo de corpo da resposta**
 
@@ -73,7 +73,7 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 
 ### Cadastrar Estoque
 
-`POST` /api/estoque
+`POST` /api/v1/estoque
 
 **Campos da requisição**
 
@@ -102,7 +102,7 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 
 ### Apagar estoque
 
-`DELETE` /api/estoque/{id}
+`DELETE` /api/v1/estoque/{id}
 
 **Códigos de Resposta**
 
@@ -115,7 +115,7 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 
 ### Atualizar estoque
 
-`PUT` /api/estoque/{id}
+`PUT` /api/v1/estoque/{id}
 
 **Campos da requisição**
 
@@ -146,7 +146,7 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 ## :package: Produto
 ### Listar todas
 
-`GET` /api/produto
+`GET` /api/v1/produto
 
 **Exemplo de corpo da resposta**
 
@@ -183,7 +183,7 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 
 ### Detalhar produto
 
-`GET` /api/produto/{id}
+`GET` /api/v1/produto/{id}
 
 **Exemplo de corpo da resposta**
 
@@ -209,7 +209,7 @@ Este projeto consiste em auxiliar E-commerces a controlarem seus produtos de man
 
 ### Estoque mínimo
 
-`GET` /api/produto/estoque-minimo
+`GET` /api/v1/produto/estoque-minimo
 
 Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produtos que possuem o parâmetro ``quantidade`` igual ao parâmetro ``quantidadeMinima``
 
@@ -239,7 +239,7 @@ Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produ
 
 ### Cadastrar Produto
 
-`POST` /api/produto
+`POST` /api/v1/produto
 
 **Campos da requisição**
 
@@ -276,7 +276,7 @@ Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produ
 
 ### Atualizar Produto
 
-`PUT` /api/produto/{id}
+`PUT` /api/v1/produto/{id}
 
 **Campos da requisição**
 
@@ -314,7 +314,7 @@ Essa endpoint vai servir como maneira facilitada de retornar uma lista dos produ
 
 ### Apagar produto
 
-`DELETE` /api/produto/{id}
+`DELETE` /api/v1/produto/{id}
 
 **Códigos de Resposta**
 

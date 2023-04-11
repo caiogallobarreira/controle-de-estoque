@@ -1,7 +1,6 @@
 package br.com.fiap.cde.controllers;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.com.fiap.cde.exceptions.RestNotFoundException;
 import br.com.fiap.cde.models.Produto;
+import br.com.fiap.cde.repository.EstoqueRepository;
 import br.com.fiap.cde.repository.ProdutoRepository;
 import jakarta.validation.Valid;
 
@@ -29,13 +28,17 @@ public class ProdutoController {
     Logger logger = LoggerFactory.getLogger(ProdutoController.class);
 
     @Autowired
-    ProdutoRepository repository;
+    ProdutoRepository produtoRepository;
+    
+    @Autowired
+    EstoqueRepository estoqueRepository;
+
 
     // Get ALL
     @GetMapping
     public List<Produto> index(){
         logger.info("Listando produtos");
-        return repository.findAll();
+        return produtoRepository.findAll();
     }
     
     // Get by Id
@@ -50,7 +53,8 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity<Produto> create(@RequestBody @Valid Produto produto, BindingResult result){
         logger.info("Produto criado com sucesso! " + produto);
-        repository.save(produto);
+        produtoRepository.save(produto);
+        produto.setEstoque(estoqueRepository.findById(produto.getEstoque().getId()).get());
         return ResponseEntity.status(HttpStatus.CREATED).body(produto);
     }
 
@@ -59,7 +63,7 @@ public class ProdutoController {
     public ResponseEntity<Produto> delete(@PathVariable Long id){
         var produtoOptional = getProduto(id);
         logger.info("Produto deletado com sucesso! " + id);
-        repository.delete(produtoOptional);
+        produtoRepository.delete(produtoOptional);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -69,13 +73,12 @@ public class ProdutoController {
         getProduto(id);
         logger.info("Produto atualizado com sucesso! " + produto);
         produto.setId(id);
-        repository.save(produto);
+        produtoRepository.save(produto);
         return ResponseEntity.ok(produto);
     }
 
     private Produto getProduto(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RestNotFoundException("Produto não encontrado!"));
+        return produtoRepository.findById(id).orElseThrow(() -> new RestNotFoundException("Produto não encontrado!"));
     }
 
 }
-

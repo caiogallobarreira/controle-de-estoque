@@ -2,13 +2,10 @@ package br.com.fiap.cde.config;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import jakarta.validation.ConstraintViolationException;
-
 import br.com.fiap.cde.models.RestValidationError;
 
 @RestControllerAdvice

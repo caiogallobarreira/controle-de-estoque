@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import br.com.fiap.cde.models.Estoque;
+import br.com.fiap.cde.models.Produto;
 import br.com.fiap.cde.repository.EstoqueRepository;
 import br.com.fiap.cde.repository.ProdutoRepository;
 
@@ -26,6 +27,17 @@ public class DatabaseSeeder implements CommandLineRunner{
             new Estoque(2L, "Estoque 2", "Descricao do estoque 2"),
             new Estoque(3L, "Estoque 3", "Descricao do estoque 3"),
             new Estoque(4L, "Estoque 4", "Descricao do estoque 4")
+        ));
+
+        produtoRepository.saveAll(List.of(
+            Produto.builder().nome("Produto 1").descricao("Descricao do produto 1").estoque(estoqueRepository.findById(1L).get()).build(),
+            Produto.builder().nome("Produto 2").descricao("Descricao do produto 2").estoque(estoqueRepository.findById(1L).get()).build(),
+            Produto.builder().nome("Produto 3").descricao("Descricao do produto 3").estoque(estoqueRepository.findById(2L).get()).build(),
+            Produto.builder().nome("Produto 4").descricao("Descricao do produto 4").estoque(estoqueRepository.findById(2L).get()).build(),
+            Produto.builder().nome("Produto 5").descricao("Descricao do produto 5").estoque(estoqueRepository.findById(3L).get()).build(),
+            Produto.builder().nome("Produto 6").descricao("Descricao do produto 6").estoque(estoqueRepository.findById(3L).get()).build(),
+            Produto.builder().nome("Produto 7").descricao("Descricao do produto 7").estoque(estoqueRepository.findById(4L).get()).build(),
+            Produto.builder().nome("Produto 8").descricao("Descricao do produto 8").estoque(estoqueRepository.findById(4L).get()).build()
         ));
          
     }

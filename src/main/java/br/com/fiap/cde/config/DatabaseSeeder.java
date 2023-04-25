@@ -30,14 +30,14 @@ public class DatabaseSeeder implements CommandLineRunner{
         ));
 
         produtoRepository.saveAll(List.of(
-            Produto.builder().nome("Produto 1").descricao("Descricao do produto 1").estoque(estoqueRepository.findById(1L).get()).build(),
-            Produto.builder().nome("Produto 2").descricao("Descricao do produto 2").estoque(estoqueRepository.findById(1L).get()).build(),
-            Produto.builder().nome("Produto 3").descricao("Descricao do produto 3").estoque(estoqueRepository.findById(2L).get()).build(),
-            Produto.builder().nome("Produto 4").descricao("Descricao do produto 4").estoque(estoqueRepository.findById(2L).get()).build(),
-            Produto.builder().nome("Produto 5").descricao("Descricao do produto 5").estoque(estoqueRepository.findById(3L).get()).build(),
-            Produto.builder().nome("Produto 6").descricao("Descricao do produto 6").estoque(estoqueRepository.findById(3L).get()).build(),
-            Produto.builder().nome("Produto 7").descricao("Descricao do produto 7").estoque(estoqueRepository.findById(4L).get()).build(),
-            Produto.builder().nome("Produto 8").descricao("Descricao do produto 8").estoque(estoqueRepository.findById(4L).get()).build()
+            Produto.builder().nome("Produto 1").descricao("Descricao do produto 1").estoque(estoqueRepository.findById(1L).get()).imagemUrl("https://example.com").quantidade(10).quantidadeMinima(2).build(),
+            Produto.builder().nome("Produto 2").descricao("Descricao do produto 2").estoque(estoqueRepository.findById(1L).get()).imagemUrl("https://example.com").quantidade(10).quantidadeMinima(2).build(),
+            Produto.builder().nome("Produto 3").descricao("Descricao do produto 3").estoque(estoqueRepository.findById(2L).get()).imagemUrl("https://example.com").quantidade(10).quantidadeMinima(2).build(),
+            Produto.builder().nome("Produto 4").descricao("Descricao do produto 4").estoque(estoqueRepository.findById(2L).get()).imagemUrl("https://example.com").quantidade(10).quantidadeMinima(2).build(),
+            Produto.builder().nome("Produto 5").descricao("Descricao do produto 5").estoque(estoqueRepository.findById(3L).get()).imagemUrl("https://example.com").quantidade(10).quantidadeMinima(2).build(),
+            Produto.builder().nome("Produto 6").descricao("Descricao do produto 6").estoque(estoqueRepository.findById(3L).get()).imagemUrl("https://example.com").quantidade(10).quantidadeMinima(2).build(),
+            Produto.builder().nome("Produto 7").descricao("Descricao do produto 7").estoque(estoqueRepository.findById(4L).get()).imagemUrl("https://example.com").quantidade(10).quantidadeMinima(2).build(),
+            Produto.builder().nome("Produto 8").descricao("Descricao do produto 8").estoque(estoqueRepository.findById(4L).get()).imagemUrl("https://example.com").quantidade(10).quantidadeMinima(2).build()
         ));
          
     }

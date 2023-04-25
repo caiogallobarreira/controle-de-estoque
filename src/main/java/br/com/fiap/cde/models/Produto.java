@@ -1,5 +1,12 @@
 package br.com.fiap.cde.models;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+
+import br.com.fiap.cde.controllers.EstoqueController;
+import br.com.fiap.cde.controllers.ProdutoController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,4 +44,14 @@ public class Produto {
 
   @NotNull
   private Integer quantidadeMinima;
+
+  public EntityModel<Produto> toEntityModel(){
+    return EntityModel.of(
+      this,
+      linkTo(methodOn(ProdutoController.class).show(this.getId())).withSelfRel(),
+      linkTo(methodOn(ProdutoController.class).delete(this.getId())).withRel("delete"),
+      linkTo(methodOn(ProdutoController.class).index(null, Pageable.unpaged())).withRel("all"),    
+      linkTo(methodOn(EstoqueController.class).show(this.getEstoque().getId())).withRel("estoque")
+    );
+  };
 }

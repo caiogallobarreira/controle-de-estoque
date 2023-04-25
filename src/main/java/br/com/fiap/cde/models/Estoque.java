@@ -1,5 +1,11 @@
 package br.com.fiap.cde.models;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+
+import br.com.fiap.cde.controllers.EstoqueController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,4 +30,13 @@ public class Estoque {
 
     @NotNull @Size(min = 3, max = 255, message = "A descrição deve ter entre 3 e 50 caracteres")
     private String descricao;
+
+    public EntityModel<Estoque> toEntityModel(){
+        return EntityModel.of(
+          this,
+          linkTo(methodOn(EstoqueController.class).show(this.getId())).withSelfRel(),
+          linkTo(methodOn(EstoqueController.class).delete(this.getId())).withRel("delete"),
+          linkTo(methodOn(EstoqueController.class).index(null, Pageable.unpaged())).withRel("all")      
+        );
+      };
 }

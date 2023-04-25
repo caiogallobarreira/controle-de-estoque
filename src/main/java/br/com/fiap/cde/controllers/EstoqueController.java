@@ -1,8 +1,11 @@
 package br.com.fiap.cde.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,12 +31,14 @@ public class EstoqueController {
     @Autowired
     EstoqueRepository repository;
 
+    @Autowired
+    PagedResourcesAssembler<Object> assembler; 
+
     // Get All
     @GetMapping
-    public Page<Estoque> index(@RequestParam(required = false) String search, Pageable pageable){
-        log.info("Listando estoques");
-        if (search != null) return repository.findByNomeContaining(search, pageable);
-        return repository.findAll(pageable);
+    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) String search, @PageableDefault(size = 5) Pageable pageable){
+        var estoques = (search == null) ? repository.findAll(pageable) : repository.findByNomeContaining(search, pageable);
+        return assembler.toModel(estoques.map(Estoque::toEntityModel));
     }
 
     // Get by Id
@@ -46,10 +51,10 @@ public class EstoqueController {
 
     // Post
     @PostMapping
-    public ResponseEntity<Estoque> create(@RequestBody @Valid Estoque estoque, BindingResult result){
+    public ResponseEntity<EntityModel<Estoque>> create(@RequestBody @Valid Estoque estoque, BindingResult result){
         log.info("Estoque criado com sucesso! " + estoque);
         repository.save(estoque);
-        return ResponseEntity.status(HttpStatus.CREATED).body(estoque);
+        return ResponseEntity.created(estoque.toEntityModel().getRequiredLink("self").toUri()).body(estoque.toEntityModel());
     }
 
     // Delete

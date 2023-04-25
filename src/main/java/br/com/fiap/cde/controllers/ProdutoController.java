@@ -1,8 +1,11 @@
 package br.com.fiap.cde.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -31,12 +34,14 @@ public class ProdutoController {
     @Autowired
     EstoqueRepository estoqueRepository;
 
+    @Autowired
+    PagedResourcesAssembler<Object> assembler; 
+
     // Get ALL
     @GetMapping
-    public Page<Produto> index(@RequestParam(required = false) String search, Pageable pageable){
-        log.info("Listando produtos");
-        if (search != null) return produtoRepository.findByNomeContaining(search, pageable);
-        return produtoRepository.findAll(pageable);
+    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) String search, @PageableDefault(size = 5) Pageable pageable){
+        var estoques = (search == null) ? produtoRepository.findAll(pageable) : produtoRepository.findByNomeContaining(search, pageable);
+        return assembler.toModel(estoques.map(Produto::toEntityModel));
     }
     
     // Get by Id
@@ -49,11 +54,11 @@ public class ProdutoController {
 
     // Post
     @PostMapping
-    public ResponseEntity<Produto> create(@RequestBody @Valid Produto produto, BindingResult result){
+    public ResponseEntity<EntityModel<Produto>> create(@RequestBody @Valid Produto produto, BindingResult result){
         log.info("Produto criado com sucesso! " + produto);
         produtoRepository.save(produto);
         produto.setEstoque(estoqueRepository.findById(produto.getEstoque().getId()).get());
-        return ResponseEntity.status(HttpStatus.CREATED).body(produto);
+        return ResponseEntity.created(produto.toEntityModel().getRequiredLink("self").toUri()).body(produto.toEntityModel());
     }
 
     // Delete

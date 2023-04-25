@@ -1,8 +1,11 @@
 package br.com.fiap.cde.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,28 +31,29 @@ public class UsuarioController {
     @Autowired
     UsuarioRepository repository;
 
+    @Autowired
+    PagedResourcesAssembler<Object> assembler; 
+
     // Get ALL
     @GetMapping
-    public Page<Usuario> index(@RequestParam(required = false) String search, Pageable pageable){
-        log.info("Listando usuarios");
-        if (search != null) return repository.findByNomeContaining(search, pageable);
-        return repository.findAll(pageable);
+    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) String search, @PageableDefault(size = 5) Pageable pageable){
+        var usuarios = (search == null) ? repository.findAll(pageable) : repository.findByNomeContaining(search, pageable);
+        return assembler.toModel(usuarios.map(Usuario::toEntityModel));
     }
 
     // Get by Id
     @GetMapping("{id}")
-    public ResponseEntity<Usuario> show(@PathVariable Long id){
+    public ResponseEntity<EntityModel<Usuario>> show(@PathVariable Long id){
         log.info("Listando usuario: " + id);
-        var usuarioOptional = getUsuario(id);
-        return ResponseEntity.ok(usuarioOptional);
+        return ResponseEntity.ok(getUsuario(id).toEntityModel());
     }
 
     // Post
     @PostMapping
-    public ResponseEntity<Usuario> create(@RequestBody @Valid Usuario usuario, BindingResult result){
+    public ResponseEntity<EntityModel<Usuario>> create(@RequestBody @Valid Usuario usuario, BindingResult result){
         log.info("Usuario criado com sucesso! " + usuario);
         repository.save(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+        return ResponseEntity.created(usuario.toEntityModel().getRequiredLink("self").toUri()).body(usuario.toEntityModel());
     }
 
     // Delete

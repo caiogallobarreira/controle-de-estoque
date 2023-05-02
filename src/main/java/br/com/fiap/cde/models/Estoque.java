@@ -32,11 +32,11 @@ public class Estoque {
     private String descricao;
 
     public EntityModel<Estoque> toEntityModel(){
-        return EntityModel.of(
-          this,
-          linkTo(methodOn(EstoqueController.class).show(this.getId())).withSelfRel(),
-          linkTo(methodOn(EstoqueController.class).delete(this.getId())).withRel("delete"),
-          linkTo(methodOn(EstoqueController.class).index(null, Pageable.unpaged())).withRel("all")      
-        );
-      };
+      return EntityModel.of(
+        this,
+        linkTo(methodOn(EstoqueController.class).show(this.getId())).withSelfRel(),
+        linkTo(methodOn(EstoqueController.class).delete(this.getId())).withRel("delete"),
+        linkTo(methodOn(EstoqueController.class).index(null, Pageable.unpaged())).withRel("all")      
+      );
+    };
 }

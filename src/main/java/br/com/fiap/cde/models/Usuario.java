@@ -1,12 +1,11 @@
 package br.com.fiap.cde.models;
 
-import org.springframework.hateoas.EntityModel;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.fiap.cde.controllers.UsuarioController;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
-import org.springframework.data.domain.Pageable;
+import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 @Builder
-public class Usuario {
+public class Usuario implements UserDetails{
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -33,12 +32,41 @@ public class Usuario {
   @NotNull @Size(min = 3, max = 255, message = "O email deve ter entre 3 e 255 caracteres")
   private String email;
 
-  public EntityModel<Usuario> toEntityModel(){
-    return EntityModel.of(
-      this,
-      linkTo(methodOn(UsuarioController.class).show(this.getId())).withSelfRel(),
-      linkTo(methodOn(UsuarioController.class).delete(this.getId())).withRel("delete"),
-      linkTo(methodOn(UsuarioController.class).index(null, Pageable.unpaged())).withRel("all")      
-    );
-  };
+  @NotNull @Size(min = 3, max = 255, message = "A senha deve ter entre 3 e 255 caracteres")
+  private String senha;
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+  }
+
+  @Override
+  public String getPassword() {
+    return this.senha;
+  }
+
+  @Override
+  public String getUsername() {
+    return this.email;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  } 
 }

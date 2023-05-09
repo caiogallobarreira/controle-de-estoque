@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.cde.models.Credencial;
 import br.com.fiap.cde.models.Usuario;
 import br.com.fiap.cde.repository.UsuarioRepository;
+import br.com.fiap.cde.service.TokenService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -30,10 +31,14 @@ public class UsuarioController {
     @Autowired
     PagedResourcesAssembler<Object> assembler; 
 
+    @Autowired
+    TokenService tokenService;
+
     @PostMapping("login")
     public ResponseEntity<Object> login(@RequestBody Credencial credencial){
         authenticationManager.authenticate(credencial.toAuthentication());
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken(credencial);
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("registrar")

@@ -13,10 +13,12 @@ import br.com.fiap.cde.models.Credencial;
 import br.com.fiap.cde.models.Usuario;
 import br.com.fiap.cde.repository.UsuarioRepository;
 import br.com.fiap.cde.service.TokenService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
+@Tag(name = "Usuario", description = "API de usuarios")
 public class UsuarioController {
 
     @Autowired

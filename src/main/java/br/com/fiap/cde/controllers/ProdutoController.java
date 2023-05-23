@@ -22,10 +22,14 @@ import br.com.fiap.cde.exceptions.RestNotFoundException;
 import br.com.fiap.cde.models.Produto;
 import br.com.fiap.cde.repository.EstoqueRepository;
 import br.com.fiap.cde.repository.ProdutoRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController @Slf4j
+@SecurityRequirement(name = "bearer-key")
+@Tag(name = "Produto", description = "API de produtos")
 @RequestMapping("/api/v1/produto")
 public class ProdutoController {
     @Autowired

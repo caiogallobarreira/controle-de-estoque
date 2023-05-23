@@ -21,10 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.cde.exceptions.RestNotFoundException;
 import br.com.fiap.cde.models.Estoque;
 import br.com.fiap.cde.repository.EstoqueRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController @Slf4j
+@SecurityRequirement(name = "bearer-key")
+@Tag(name = "Estoque", description = "API de estoque")
 @RequestMapping("/api/v1/estoque")
 public class EstoqueController {
 

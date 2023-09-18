@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import br.com.fiap.cde.models.Estoque;
 import br.com.fiap.cde.models.Produto;
@@ -14,6 +15,7 @@ import br.com.fiap.cde.repository.ProdutoRepository;
 import br.com.fiap.cde.repository.UsuarioRepository;
 
 @Configuration
+@Profile("dev")
 public class DatabaseSeeder implements CommandLineRunner{
 
     @Autowired
